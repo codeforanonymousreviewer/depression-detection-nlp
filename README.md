@@ -417,3 +417,9 @@ df = pd.read_csv('https://raw.githubusercontent.com/amurark/mental-health-detect
 
 # Dataset is automatically loaded in notebooks
 
+📄 License
+This code is provided for research and review purposes.
+License Type: Research Use Only (During Peer Review)
+
+📞 Contact
+For questions about this implementation, please refer to the corresponding author contact information in the published manuscript.
