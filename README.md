@@ -372,7 +372,7 @@ Recommended execution order:
 Source
 Mental Health Text Classification Dataset
 
-10,507 annotated social media posts
+
 4 mental health categories
 Publicly available and free to use
 Availability
@@ -393,12 +393,7 @@ Kaggle (Original Sources):
 Data Distribution
 
 
-Total: 10,507 samples
 
-- Normal: 2,845 samples (27.1%)
-- Anxiety: 2,432 samples (23.2%)
-- Depression: 2,674 samples (25.5%)
-- Suicidal Ideation: 2,556 samples (24.3%)
 
 Text Length: 10-500 tokens
 Source: Reddit, Twitter, and other social media platforms
