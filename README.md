@@ -16,24 +16,21 @@ captures psychiatric severity gradients than traditional discrete classification
 - **RoBERTa-base** (Best): Weighted F1-score = **0.8584**
 - Ablation studies yielded only marginal improvements (≤0.03)
 - Embedding analysis revealed pronounced overlap between depression and suicidal classes
-- **Centroid Distance**: 0.2063 (indicating clinical comorbidity)
-- **Separation Index**: 0.1333
+- **Centroid Distance**: 12.9674 (Depression-Suicidal Distance)
+- **Separation Index**: 0.5709
 
 ### Proposed Continuous Regression Model
 - **Depression Severity**: Spearman ρ = **0.9091**, CCC = **0.9484**
 - **Suicide Risk**: Spearman ρ = **0.9097**, CCC = **0.9083**
 - **High-Risk Detection**: Average Precision = **0.96**
   - At 0.7 threshold: Recall = 0.8026, F1 = 0.7895
-  - Outperforms classification baselines on high-risk detection
 
-### Main Conclusion
-**Continuous regression significantly outperforms discrete classification** for 
-capturing psychiatric gradients and clinical risk stratification in digital 
-mental health screening.
+
+
 
 ## 📁 Notebook Structure
 
-This repository contains 8 Jupyter notebooks organized in recommended execution order:
+This repository contains 11 Jupyter notebooks organized in recommended execution order:
 
 ### **1. Backbone Comparison.ipynb**
 **Purpose:** Evaluate and compare four transformer architectures
@@ -108,12 +105,12 @@ Maximum improvement: ≤0.03 (Confirms limitations of discrete paradigms)
 **Key Results:**
 Embedding Space Analysis:
 
-Centroid Distance (Depression vs Suicidal): 0.2063 (Pronounced overlap)
-Separation Index: 0.1333 (Low separation)
+Centroid Distance (Depression vs Suicidal): 12.9674
+Separation Index: 0.5709 
 Visualization: Clear evidence of depression-suicidal comorbidity
 Conclusion: Discrete boundaries inadequate for this problem
 
-**Runtime:** ~30-45 minutes
+**Runtime:** ~5-10 minutes
 
 **Outputs:**
 - t-SNE 2D visualization
@@ -188,7 +185,7 @@ Dual-Regression Model:
 
 Average Precision: 0.96 ✓ SUPERIOR
 Recall: 0.8026 (Catches 80% of high-risk cases)
-Precision: 0.7765
+Precision: 0.7768
 F1-score: 0.7895
 Specificity: 0.9234
 Classification Baseline (RoBERTa-base):
@@ -210,7 +207,72 @@ Improvement: Regression model significantly outperforms classification
 
 ---
 
-### **6. Case Study.ipynb**
+### **6. Regression-to-Classification Mapping.ipynb**
+**Purpose:** Enable fair comparison between continuous regression and discrete classification paradigms
+
+**What it does:**
+Applies threshold-based rules to map continuous depression severity and suicidal risk scores back to four discrete categories (Normal, Anxiety, Depression, Suicidal)
+Compares overall classification performance and class-wise metrics with RoBERTa baseline
+Analyzes confusion matrices and improvements in suicidal category
+
+**Key Results:**
+Overall Accuracy = 0.8512, Weighted F1 = 0.8505 (comparable to baseline 0.8581 / 0.8584)
+Suicidal Recall improved from 0.7705 to 0.8026
+Suicidal F1 improved from 0.7740 to 0.7895
+
+**Runtime:** ~10 minutes
+
+**Outputs:**
+Regression-to-Classification performance comparison table (Table 6)
+Side-by-side confusion matrices (Figure 6)
+Evidence that continuous modeling maintains competitive classification performance while improving high-risk sensitivity
+
+---
+
+### **7. Calibration Analysis.ipynb**
+**Purpose:** Assess the reliability of predicted suicidal risk scores as clinically usable probabilities
+
+**What it does:**
+Computes Brier Score and Expected Calibration Error (ECE)
+Generates calibration curves for suicidal risk predictions
+Analyzes calibration quality across different risk levels (especially high-risk region)
+
+**Key Results:**
+Brier Score = 0.1175
+Expected Calibration Error (ECE) = 0.1520
+Calibration improves significantly in the high-risk region
+
+**Runtime:** ~5-10 minutes
+
+**Outputs:**
+Calibration metrics table (Table 7)
+Calibration curve visualization (Figure 7)
+Discussion on clinical interpretability of risk scores
+
+### **8. Quantitative Error Analysis.ipynb**
+**Purpose:** Investigate whether confusion between Depression and Suicidal categories is random or reflects clinical continuum
+
+**What it does:**
+Calculates bidirectional transition ratios between Depression and Suicidal categories
+Performs severity-stratified analysis (severe depression vs low-confidence suicidal cases)
+Visualizes severity-dependent overlap patterns
+
+**Key Results:**
+Depression → Suicidal transition ratio: 17.10% (372/2176)
+Suicidal → Depression transition ratio: 17.18% (289/1682)
+Severe Depression → Suicidal: 69.96% (368/526)
+Low-confidence Suicidal → Depression: 66.13% (289/437)
+
+**Runtime:** ~10 minutes
+
+**Outputs:**
+Quantitative transition analysis table (Table 8)
+Severity-dependent transition visualization (Figure 8)
+Strong evidence supporting the depression-suicidal continuum hypothesis
+
+---
+
+### **9. Case Study.ipynb**
 **Purpose:** Qualitative analysis with representative examples
 
 **What it does:**
@@ -248,7 +310,7 @@ Clinical Interpretation: High-risk case requiring immediate intervention
 
 ---
 
-### **7. Paired t-test & Wilcoxon signed-rank test.ipynb**
+### **10. Paired t-test & Wilcoxon signed-rank test.ipynb**
 **Purpose:** Statistical significance testing between models
 
 **What it does:**
@@ -285,7 +347,7 @@ All pairwise comparisons shown with corrected p-values
 
 ---
 
-### **8. Other Regression Models.ipynb**
+### **11. Other Regression Models.ipynb**
 **Purpose:** Explore alternative regression approaches
 
 Conclusion: Dual-regression is superior
@@ -343,31 +405,45 @@ jupyter notebook
 Step 5: Run Notebooks in Order
 
 
-Recommended execution order:
+**Recommended execution order:**
 
-1️⃣  1. Backbone Comparison.ipynb
-    ↓ (Trains baseline models)
+1️⃣ **1. Backbone Comparison.ipynb**  
+    ↓ (Trains and compares baseline transformer models)
 
-2️⃣  2. Classification Model Ablation.ipynb
-    ↓ (Tests improvements to classification)
+2️⃣ **2. Classification Model Ablation.ipynb**  
+    ↓ (Tests various improvements to discrete classification)
 
-3️⃣  3. tsne_umap_analysis.ipynb
-    ↓ (Analyzes embedding space)
+3️⃣ **3. tsne_umap_analysis.ipynb**  
+    ↓ (Analyzes embedding space and class overlap)
 
-4️⃣  4. Base Dual-Regression.ipynb
-    ↓ (Proposes new approach)
+4️⃣ **4. Base Dual-Regression.ipynb**  
+    ↓ (Core: Implements the proposed dual-regression framework)
 
-5️⃣  5. high_risk_detection_comparison.ipynb
-    ↓ (Evaluates clinical performance)
+5️⃣ **5. high_risk_detection_comparison.ipynb**  
+    ↓ (Evaluates high-risk suicidal detection performance)
 
-6️⃣  6. Case Study.ipynb (Optional)
-    ↓ (Qualitative analysis)
+6️⃣ **6. Regression-to-Classification Mapping.ipynb**  
+    ↓ (Maps continuous scores back to discrete categories for comparison)
 
-7️⃣  7. Paired t-test & Wilcoxon signed-rank test.ipynb (Optional)
-    ↓ (Statistical testing)
+7️⃣ **7. Calibration Analysis.ipynb**  
+    ↓ (Assesses probability calibration of risk scores)
 
-8️⃣  8. Other Regression Models.ipynb (Optional)
-    (Alternative approaches)
+8️⃣ **8. Quantitative Error Analysis.ipynb**  
+    ↓ (Analyzes Depression-Suicidal overlap and severity transitions)
+
+**Optional Notebooks:**
+
+9️⃣ **9. Case Study.ipynb** (Optional)  
+    ↓ (Qualitative analysis of representative hard cases)
+
+🔟 **10. Paired t-test & Wilcoxon signed-rank test.ipynb** (Optional)  
+    ↓ (Statistical significance testing)
+
+1️⃣1️⃣ **11. Other Regression Models.ipynb** (Optional)  
+    ↓ (Explores alternative regression approaches)
+
+
+
 📊 Dataset Information
 Source
 Mental Health Text Classification Dataset
