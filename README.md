@@ -322,20 +322,6 @@ Clinical Interpretation: High-risk case requiring immediate intervention
 - Interprets p-values and confidence intervals
 - Generates statistical summary tables
 
-**Key Results:**
-Statistical Significance Testing:
-
-Regression vs Classification:
-
-Paired t-test: t = 12.34, p < 0.001 *** (Highly significant)
-Wilcoxon test: Z = 4.56, p < 0.001 *** (Highly significant)
-Cohen's d: 1.23 (Large effect size)
-Conclusion: Regression model significantly outperforms classification
-RoBERTa vs DistilBERT:
-
-Paired t-test: t = 2.34, p = 0.023 * (Significant)
-Cohen's d: 0.45 (Small-to-medium effect size)
-All pairwise comparisons shown with corrected p-values
 
 **Runtime:** ~15-30 minutes
 
