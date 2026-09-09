@@ -310,7 +310,7 @@ Clinical Interpretation: High-risk case requiring immediate intervention
 
 ---
 
-### **10. Paired t-test & Wilcoxon signed-rank test.ipynb**
+### **10. 10. Statistical Uncertainty Analysis.ipynb**
 **Purpose:** Statistical significance testing between models
 
 **What it does:**
