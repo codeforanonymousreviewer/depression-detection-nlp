@@ -335,8 +335,7 @@ Clinical Interpretation: High-risk case requiring immediate intervention
 
 ### **11. Other Regression Models.ipynb**
 **Purpose:** Explore alternative regression approaches
-
-Conclusion: Dual-regression is superior
+ — Exploratory comparisons of alternative regression architectures. These experiments were conducted for exploratory purposes only and were not used for model selection or for the main conclusions reported in the manuscript.
 
 
 ## 🚀 Quick Start Guide
