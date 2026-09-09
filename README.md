@@ -310,26 +310,27 @@ Clinical Interpretation: High-risk case requiring immediate intervention
 
 ---
 
-### **10. 10. Statistical Uncertainty Analysis.ipynb**
-**Purpose:** Statistical significance testing between models
+### **10. Statistical Uncertainty Analysis.ipynb**
+**Purpose:** Quantify uncertainty in model-performance comparisons using bootstrap resampling
 
 **What it does:**
-- Performs pairwise model comparisons
-- Conducts paired t-tests (parametric statistical test)
-- Conducts Wilcoxon signed-rank tests (non-parametric alternative)
-- Calculates effect sizes (Cohen's d)
-- Applies multiple comparison corrections (Bonferroni)
-- Interprets p-values and confidence intervals
-- Generates statistical summary tables
+- Evaluates model performance on the fixed held-out test set
+- Generates 1,000 bootstrap resamples by sampling test observations with replacement
+- Performs paired comparisons using the same resampled observations for both modeling approaches
+- Calculates weighted F1-score and class-specific recall differences
+- Estimates 95% confidence intervals using the 2.5th and 97.5th percentiles of the bootstrap distributions
+- Quantifies uncertainty associated with test-set resampling
+- Does not retrain models for individual bootstrap resamples
+- Does not treat bootstrap replicates as independent experimental runs
 
-
-**Runtime:** ~15-30 minutes
+**Runtime:** ~5-10 minutes
 
 **Outputs:**
-- Statistical summary tables
-- Effect size comparisons
-- P-value interpretation guide
-- Significance test results
+- Bootstrap performance distributions
+- Weighted F1-score estimates and 95% confidence intervals
+- Suicidal recall difference and 95% confidence interval
+- Depression recall difference and 95% confidence interval
+- Bootstrap uncertainty summary tables
 
 ---
 
